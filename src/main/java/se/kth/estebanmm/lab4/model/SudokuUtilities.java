@@ -74,6 +74,8 @@ public class SudokuUtilities {
         return ch - '0';
     }
 
+
+
     private static final String easy =
                     "000914070" +
                     "010000054" +
