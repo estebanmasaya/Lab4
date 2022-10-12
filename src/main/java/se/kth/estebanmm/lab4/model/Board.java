@@ -69,11 +69,13 @@ public class Board {
                 }
             }
         }
-        int value = (int)(Math.random()*emptySquares.size());
-        int row = emptySquares.get(value).getRow();
-        int column = emptySquares.get(value).getColumn();
-        emptySquares.get(value).setValue(row, column, solution[row][column].getValue());
-        System.out.println("row: " + row + "\n" + "column: " + column + " rand: " + value + " solution:" + solution[row][column].getValue() + " emptySquSize: " + emptySquares.size());
+        if(emptySquares.size()!=0){
+            int value = (int)(Math.random()*emptySquares.size());
+            int row = emptySquares.get(value).getRow();
+            int column = emptySquares.get(value).getColumn();
+            emptySquares.get(value).setValue(row, column, solution[row][column].getValue());
+            System.out.println("row: " + row + "\n" + "column: " + column + " rand: " + value + " solution:" + solution[row][column].getValue() + " emptySquSize: " + emptySquares.size());
+        }
 
 
     }
