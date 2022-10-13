@@ -9,18 +9,22 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import se.kth.estebanmm.lab4.view.GridView;
+import se.kth.estebanmm.lab4.view.SudokuView;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        GridView gridView = new GridView();
-        gridView.getNumberPane();
 
-        VBox root = new VBox();
-        Scene scene = new Scene(root, 400, 400);
+        primaryStage.setTitle("Sudoku");
+        SudokuView root = new SudokuView();
+        Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        Menu menu = new Menu();
+        primaryStage.sizeToScene();
+        primaryStage.setResizable(false);
+
+
+
         primaryStage.show();
 
 //        Button button = new Button();

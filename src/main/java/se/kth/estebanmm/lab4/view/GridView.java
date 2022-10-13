@@ -2,6 +2,7 @@ package se.kth.estebanmm.lab4.view;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -39,8 +40,17 @@ public class GridView {
         }
     }
 
+    public void setNumberTile(Label label, int number) {
+        String s = Integer.toString(number);
+        label.setText(s);
+    }
+
     public TilePane getNumberPane() {
         return numberPane;
+    }
+
+    public Label[][] getNumberTiles() {
+        return numberTiles;
     }
 
     private final TilePane makeNumberPane() {
@@ -74,7 +84,6 @@ public class GridView {
                 root.getChildren().add(section);
             }
         }
-
         return root;
     }
 }
