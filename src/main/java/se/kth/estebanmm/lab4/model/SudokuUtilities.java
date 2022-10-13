@@ -26,7 +26,9 @@ public class SudokuUtilities {
             case HARD: representationString = hard; break;
             default: representationString = medium;
         }
-        return convertStringToIntMatrix(representationString);
+        int[][][] matrix = convertStringToIntMatrix(representationString);
+        matrix = flipNumbers(matrix, 2, 8);
+        return matrix;
     }
 
     /**
@@ -69,6 +71,47 @@ public class SudokuUtilities {
         return values;
     }
 
+    private static int[][][] mirrorHorizontal(int[][][] original){
+        int[][][] newMatrix = new int[GRID_SIZE][GRID_SIZE][2];
+        for(int i=0; i < GRID_SIZE; i++){
+            for(int j=0; j < GRID_SIZE; j++){
+                for(int k=0; k < 2; k++) {
+                    newMatrix[i][j][k] = original[GRID_SIZE-i-1][j][k];
+                }
+            }
+        }
+        return newMatrix;
+    }
+
+    private static int[][][] mirrorVertical(int[][][] original){
+        int[][][] newMatrix = new int[GRID_SIZE][GRID_SIZE][2];
+        for(int i=0; i < GRID_SIZE; i++){
+            for(int j=0; j < GRID_SIZE; j++){
+                for(int k=0; k < 2; k++) {
+                    newMatrix[i][j][k] = original[i][GRID_SIZE-j-1][k];
+                }
+            }
+        }
+        return newMatrix;
+    }
+
+    private static int[][][] flipNumbers(int[][][] matrix, int numA, int numB){
+        int[][][] newMatrix = new int[GRID_SIZE][GRID_SIZE][2];
+        for(int i=0; i < GRID_SIZE; i++){
+            for(int j=0; j < GRID_SIZE; j++){
+                for(int k=0; k < 2; k++) {
+                    if(matrix[i][j][k]==numA){
+                        matrix[i][j][k] = numB;
+                    }
+                    else if(matrix[i][j][k]==numB){
+                        matrix[i][j][k] = numA;
+                    }
+                }
+            }
+        }
+        return matrix;
+    }
+
     private static int convertCharToSudokuInt(char ch) {
         if (ch < '0' || ch > '9') throw new IllegalArgumentException("character " + ch);
         return ch - '0';
@@ -97,7 +140,7 @@ public class SudokuUtilities {
                     "178493265";
 
     private static final String medium =
-            "300000010" +
+                    "300000010" +
                     "000050906" +
                     "050401200" +
                     "030000080" +

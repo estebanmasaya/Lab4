@@ -9,6 +9,8 @@ public class TestMain {
     public static void main(String[] args) {
         Board b = new Board(SudokuUtilities.SudokuLevel.EASY);
         System.out.println(b.toMatrix());
+        System.out.println("SOLUTION: \n"+ b.solutionToMatrix());
+
         for(int i=0; i<60; i++){
             b.hintHelper();
         }
