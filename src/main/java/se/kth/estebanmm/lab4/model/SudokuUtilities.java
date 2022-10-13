@@ -26,9 +26,8 @@ public class SudokuUtilities {
             case HARD: representationString = hard; break;
             default: representationString = medium;
         }
-        int[][][] matrix = convertStringToIntMatrix(representationString);
-        matrix = flipNumbers(matrix, 2, 8);
-        return matrix;
+
+        return shuffleMatrix(convertStringToIntMatrix(representationString));
     }
 
     /**
@@ -67,7 +66,6 @@ public class SudokuUtilities {
                         convertCharToSudokuInt(charRepresentation[charIndex++]);
             }
         }
-
         return values;
     }
 
@@ -96,7 +94,6 @@ public class SudokuUtilities {
     }
 
     private static int[][][] flipNumbers(int[][][] matrix, int numA, int numB){
-        int[][][] newMatrix = new int[GRID_SIZE][GRID_SIZE][2];
         for(int i=0; i < GRID_SIZE; i++){
             for(int j=0; j < GRID_SIZE; j++){
                 for(int k=0; k < 2; k++) {
@@ -117,6 +114,16 @@ public class SudokuUtilities {
         return ch - '0';
     }
 
+    private static int[][][] shuffleMatrix(int [][][] matrix){
+        for(int i=0; i<5 ; i++){
+            int randomA = (int)(Math.random()*GRID_SIZE);
+            int randomB = (int)(Math.random()*GRID_SIZE);
+            matrix = flipNumbers(matrix, randomA, randomB);
+        }
+            matrix = mirrorHorizontal(matrix);
+            matrix = mirrorVertical(matrix);
+        return matrix;
+    }
 
 
     private static final String easy =
