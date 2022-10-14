@@ -4,7 +4,7 @@ public class Square {
     private int row;
     private int column;
     private int value;
-    private boolean changeable;
+    private final boolean changeable;
 
     public Square(int row, int column, int value, boolean changeable) {
         this.row = row;
