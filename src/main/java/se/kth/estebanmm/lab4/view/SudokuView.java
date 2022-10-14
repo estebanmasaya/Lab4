@@ -21,7 +21,7 @@ public class SudokuView extends VBox {
     private Button checkButton;
     private Button hintButton;
 
-    private int nextNumber;
+    private String nextStringNumber;
 
     public SudokuView(){
         super();
@@ -33,12 +33,12 @@ public class SudokuView extends VBox {
         generateLeftPanel();
         TilePane tilePane = gridView.getNumberPane();
         Label[][] numberTiles = gridView.getNumberTiles();
+        GridHandler[][] grindHandlers = new GridHandler[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
         for(int i=0; i< SudokuUtilities.GRID_SIZE; i++)
-            for(int j=0; j< SudokuUtilities.GRID_SIZE; i++){
-
+            for(int j=0; j< SudokuUtilities.GRID_SIZE; j++){
+                grindHandlers[i][j] = new GridHandler();
+                numberTiles[i][j].addEventHandler(MouseEvent.MOUSE_CLICKED, grindHandlers[i][j]);
         }
-        GridHandler gridHandler = new GridHandler();
-        tilePane.addEventHandler(MouseEvent.MOUSE_CLICKED, gridHandler);
         borderPane.setCenter(tilePane);
         borderPane.setLeft(leftPanel);
         this.getChildren().addAll(menuBar, borderPane);
@@ -87,7 +87,7 @@ public class SudokuView extends VBox {
 
         @Override
         public void handle(ActionEvent actionEvent) {
-            nextNumber = 8;
+            nextStringNumber = "8";
             System.out.println("SIIIII!!!!");
 
         }
@@ -96,6 +96,10 @@ public class SudokuView extends VBox {
 
         @Override
         public void handle(MouseEvent event) {
+            if(event.getSource() instanceof Label && nextStringNumber!="0"){
+                ((Label) event.getSource()).setText(nextStringNumber);
+                nextStringNumber="0";
+            }
             System.out.println(event.getSource());
         }
     }
