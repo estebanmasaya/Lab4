@@ -33,7 +33,6 @@ public class SudokuView extends VBox {
         borderPane = new BorderPane();
         borderPane.setPadding(new Insets(5));
         gridView = new GridView();
-        gridView.
         generateLeftPanel();
         generateRightPanel();
         borderPane.setCenter(gridView.getNumberPane());
@@ -58,23 +57,22 @@ public class SudokuView extends VBox {
 
     private FlowPane generateRightPanel(){
         rightPanel = new FlowPane(Orientation.VERTICAL);
-        oneToNine = new Button[SudokuUtilities.GRID_SIZE];
+        oneToNine = new Button[(SudokuUtilities.GRID_SIZE)+1];
         for(int i=0; i < SudokuUtilities.GRID_SIZE; i++) {
             oneToNine[i] = new Button(Integer.toString(i+1));
         }
+        oneToNine[9] = new Button("C");
         rightPanel.getChildren().addAll(oneToNine);
 
         rightPanel.setAlignment(Pos.CENTER);
         rightPanel.setColumnHalignment(HPos.CENTER);
         rightPanel.setPadding(new Insets(5));
-        rightPanel.setPrefHeight(200);
-        rightPanel.setVgap(8);
+        rightPanel.setPrefHeight(350);
+        rightPanel.setVgap(2);
 
         return rightPanel;
     }
-
-
-
+    
     private MenuBar generateMenu(){
         Menu fileMenu = new Menu("File");
         MenuItem loadGame = new MenuItem("Load Game");
