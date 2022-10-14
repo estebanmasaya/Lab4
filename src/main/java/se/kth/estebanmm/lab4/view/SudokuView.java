@@ -32,13 +32,6 @@ public class SudokuView extends VBox {
         gridView = new GridView();
         generateLeftPanel();
         TilePane tilePane = gridView.getNumberPane();
-        Label[][] numberTiles = gridView.getNumberTiles();
-        GridHandler[][] grindHandlers = new GridHandler[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
-        for(int i=0; i< SudokuUtilities.GRID_SIZE; i++)
-            for(int j=0; j< SudokuUtilities.GRID_SIZE; j++){
-                grindHandlers[i][j] = new GridHandler();
-                numberTiles[i][j].addEventHandler(MouseEvent.MOUSE_CLICKED, grindHandlers[i][j]);
-        }
         borderPane.setCenter(tilePane);
         borderPane.setLeft(leftPanel);
         this.getChildren().addAll(menuBar, borderPane);
@@ -48,8 +41,6 @@ public class SudokuView extends VBox {
     private FlowPane generateLeftPanel(){
         checkButton = new Button("Check");
         hintButton = new Button("Hint");
-        HintHandler hintHandler = new HintHandler();
-        hintButton.addEventHandler(ActionEvent.ACTION, hintHandler);
         leftPanel = new FlowPane(Orientation.VERTICAL);
         leftPanel.getChildren().addAll(checkButton, hintButton);
         leftPanel.setAlignment(Pos.CENTER);
@@ -83,24 +74,4 @@ public class SudokuView extends VBox {
         return menuBar;
     }
 
-    private class HintHandler implements EventHandler<ActionEvent>{
-
-        @Override
-        public void handle(ActionEvent actionEvent) {
-            nextStringNumber = "8";
-            System.out.println("SIIIII!!!!");
-
-        }
-    }
-    private class GridHandler implements EventHandler<MouseEvent>{
-
-        @Override
-        public void handle(MouseEvent event) {
-            if(event.getSource() instanceof Label && nextStringNumber!="0"){
-                ((Label) event.getSource()).setText(nextStringNumber);
-                nextStringNumber="0";
-            }
-            System.out.println(event.getSource());
-        }
-    }
 }
