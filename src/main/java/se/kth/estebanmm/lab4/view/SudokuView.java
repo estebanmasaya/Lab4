@@ -1,6 +1,7 @@
 package se.kth.estebanmm.lab4.view;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.geometry.HPos;
@@ -24,7 +25,9 @@ public class SudokuView extends VBox {
 
     private Button[] oneToNine;
 
+
     private String nextStringNumber;
+    private Label clickedLabel;
 
     public SudokuView(){
         super();
@@ -39,6 +42,7 @@ public class SudokuView extends VBox {
         borderPane.setLeft(leftPanel);
         borderPane.setRight(rightPanel);
         this.getChildren().addAll(menuBar, borderPane);
+        addEventHandlers();
 
     }
 
@@ -96,5 +100,52 @@ public class SudokuView extends VBox {
         menuBar = new MenuBar(fileMenu, gameMenu, helpMenu);
         return menuBar;
     }
+
+
+    public String getNextStringNumber() {
+        return nextStringNumber;
+    }
+
+    public Label getClickedLabel() {
+        return clickedLabel;
+    }
+
+    private void addEventHandlers() {
+        EventHandler<ActionEvent>[] oneToNineHandlers = new EventHandler[SudokuUtilities.GRID_SIZE + 1];
+        for (int i = 0; i < SudokuUtilities.GRID_SIZE + 1; i++) {
+            oneToNineHandlers[i] = new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    if (event.getSource() instanceof Button) {
+                        nextStringNumber = ((Button) event.getSource()).getText();
+                        System.out.println(nextStringNumber);
+                    }
+                }
+            };
+            oneToNine[i].addEventHandler(ActionEvent.ACTION, oneToNineHandlers[i]);
+        }
+
+        EventHandler<MouseEvent>[][] gridHandlers = new EventHandler[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
+        for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
+            for (int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
+                gridHandlers[i][j] = new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (mouseEvent.getSource() instanceof Label) {
+                            if(nextStringNumber=="C"){
+                                ((Label) mouseEvent.getSource()).setText("");
+                            }
+                            else{
+                                ((Label) mouseEvent.getSource()).setText(nextStringNumber);
+                            }
+                            clickedLabel = ((Label)mouseEvent.getSource());
+                        }
+                    }
+                };
+                gridView.getNumberTiles()[i][j].addEventHandler(MouseEvent.MOUSE_CLICKED, gridHandlers[i][j]);
+            }
+        }
+    }
+
 
 }
