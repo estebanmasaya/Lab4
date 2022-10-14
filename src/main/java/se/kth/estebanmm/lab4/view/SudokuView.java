@@ -25,14 +25,13 @@ public class SudokuView extends VBox {
 
     public SudokuView(){
         super();
-        this.setFillWidth(true);
+
         generateMenu();
         borderPane = new BorderPane();
         borderPane.setPadding(new Insets(5));
         gridView = new GridView();
         generateLeftPanel();
-        TilePane tilePane = gridView.getNumberPane();
-        borderPane.setCenter(tilePane);
+        borderPane.setCenter(gridView.getNumberPane());
         borderPane.setLeft(leftPanel);
         this.getChildren().addAll(menuBar, borderPane);
 
@@ -45,7 +44,7 @@ public class SudokuView extends VBox {
         leftPanel.getChildren().addAll(checkButton, hintButton);
         leftPanel.setAlignment(Pos.CENTER);
         leftPanel.setColumnHalignment(HPos.CENTER);
-        leftPanel.setPadding(new Insets(5));
+        //leftPanel.setPadding(new Insets(5));
         leftPanel.setPrefHeight(200);
         leftPanel.setVgap(8);
         return leftPanel;
