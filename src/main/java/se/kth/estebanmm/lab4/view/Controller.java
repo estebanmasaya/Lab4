@@ -1,6 +1,9 @@
 package se.kth.estebanmm.lab4.view;
 
 import se.kth.estebanmm.lab4.model.Board;
+import se.kth.estebanmm.lab4.model.Square;
+
+import static java.lang.Integer.parseInt;
 
 public class Controller {
     private final Board model;
@@ -11,8 +14,8 @@ public class Controller {
         this.view = view;
     }
 
-    void makeMove(){
-
-        //model.makeMove(Integer.valueOf(view.getNextStringNumber()));
+    void HandleMove(Square square){
+        model.makeMove(square, parseInt(view.getNextStringNumber()));
+        view.updateFromModel();
     }
 }

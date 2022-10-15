@@ -29,19 +29,30 @@ public class Board {
     public boolean makeMove(int row, int column, int value) {
         Square square = board[row][column];
         if (square.isChangeable()){
-            square.setValue(row, column, value);
+            square.setValue(value);
             return true;
         }
         return false;
     }
 
+    public boolean makeMove(Square square, int value){
+        if (square.isChangeable()){
+            square.setValue(value);
+            return true;
+        }
+        return false;
+    }
 
+    //KAN VI RETURNERA HELA BOARD HÄR, ELLER BORDE VI CLONeA DEN?
+    public Square[][] getBoard() {
+        return board;
+    }
 
     public void clearBoard() {
         for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
             for (int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
                 if (board[i][j].isChangeable()) {
-                    board[i][j].setValue(i, j, 0);
+                    board[i][j].setValue(0);
                 }
             }
         }
@@ -73,7 +84,7 @@ public class Board {
             int value = (int)(Math.random()*emptySquares.size());
             int row = emptySquares.get(value).getRow();
             int column = emptySquares.get(value).getColumn();
-            emptySquares.get(value).setValue(row, column, solution[row][column].getValue());
+            emptySquares.get(value).setValue(solution[row][column].getValue());
             System.out.println("row: " + row + "\n" + "column: " + column + " rand: " + value + " solution:" + solution[row][column].getValue() + " emptySquSize: " + emptySquares.size());
         }
 
@@ -82,7 +93,7 @@ public class Board {
 
     public void clearSquare(int row, int column) {
         if (board[row][column].isChangeable()) {
-            board[row][column].setValue(row, column, 0);
+            board[row][column].setValue(0);
         }
     }
 
