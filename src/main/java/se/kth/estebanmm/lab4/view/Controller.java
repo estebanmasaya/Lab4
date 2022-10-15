@@ -2,6 +2,7 @@ package se.kth.estebanmm.lab4.view;
 
 import se.kth.estebanmm.lab4.model.Board;
 import se.kth.estebanmm.lab4.model.Square;
+import se.kth.estebanmm.lab4.model.SudokuUtilities;
 
 import static java.lang.Integer.parseInt;
 
@@ -18,4 +19,19 @@ public class Controller {
         model.makeMove(square, parseInt(view.getNextStringNumber()));
         view.updateFromModel();
     }
+
+    boolean HandleCheck() {
+        return model.checkIfCorrect();
+    }
+
+    void HandleHints(){
+        model.hintHelper();
+        view.updateFromModel();
+    }
+
+    void onInitNewGameRoundSelected(){
+        model.initBoard(SudokuUtilities.SudokuLevel.EASY); //diffucilty baserad på vad användaren trycker
+        view.updateFromModel();
+    }
+
 }

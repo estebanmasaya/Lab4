@@ -93,6 +93,7 @@ public class SudokuUtilities {
         return newMatrix;
     }
 
+
     private static int[][][] flipNumbers(int[][][] matrix, int numA, int numB){
         for(int i=0; i < GRID_SIZE; i++){
             for(int j=0; j < GRID_SIZE; j++){

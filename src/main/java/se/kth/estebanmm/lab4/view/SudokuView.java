@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.WindowEvent;
 import se.kth.estebanmm.lab4.model.Board;
 import se.kth.estebanmm.lab4.model.Square;
 import se.kth.estebanmm.lab4.model.SudokuUtilities;
@@ -25,6 +26,8 @@ public class SudokuView extends VBox {
     private FlowPane rightPanel;
     private Button checkButton;
     private Button hintButton;
+
+    private Button helpButton;
 
     private Button[] oneToNine;
 
@@ -169,7 +172,44 @@ public class SudokuView extends VBox {
                 gridView.getNumberTiles()[i][j].addEventHandler(MouseEvent.MOUSE_CLICKED, gridHandlers[i][j]);
             }
         }
+
+        EventHandler<MouseEvent> checkButton = new EventHandler<>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getSource() instanceof Button) {
+                    if (controller.HandleCheck()){
+                        System.out.println("It is correct!"); //Här kanske vi kan reseta spelet?
+                    }
+                }
+            }
+        };
+        this.checkButton.addEventHandler(MouseEvent.MOUSE_CLICKED, checkButton);
+
+        EventHandler<MouseEvent> hintButton = new EventHandler<>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getSource() instanceof Button) {
+                    controller.HandleHints();
+                }
+            }
+        };
+        this.hintButton.addEventHandler(MouseEvent.MOUSE_CLICKED, hintButton);
+
+        EventHandler<MouseEvent> helpButton = new EventHandler<>() { // FIXA!
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getSource() instanceof Button) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Rules!");
+                    alert.setContentText("This is the rules: ");
+                    alert.show();
+                }
+            }
+        };
+        menuBar.getMenus().get(2).addEventHandler(MouseEvent.MOUSE_CLICKED, helpButton);
     }
+
+
 
 
 }
