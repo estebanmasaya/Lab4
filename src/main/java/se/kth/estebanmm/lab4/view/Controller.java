@@ -34,4 +34,8 @@ public class Controller {
         view.updateFromModel();
     }
 
+    void handleExit(){
+
+    }
+    
 }

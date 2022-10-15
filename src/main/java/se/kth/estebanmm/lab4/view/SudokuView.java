@@ -207,6 +207,16 @@ public class SudokuView extends VBox {
             }
         };
         menuBar.getMenus().get(2).addEventHandler(MouseEvent.MOUSE_CLICKED, helpButton);
+
+        EventHandler<MouseEvent> exit = new EventHandler<>() { // FIXA!
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getSource() instanceof Button) {
+
+                }
+            }
+        };
+        menuBar.getMenus().get(2).addEventHandler(MouseEvent.MOUSE_CLICKED, helpButton);
     }
 
 
