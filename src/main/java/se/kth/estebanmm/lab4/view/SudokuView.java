@@ -113,12 +113,12 @@ public class SudokuView extends VBox {
 
         Menu gameMenu = new Menu("Game");
         MenuItem newGame = new MenuItem("New game");
-        Menu chooseLevel = new Menu("Choose Level");
+        //Menu chooseLevel = new Menu("Choose Level");
         MenuItem easy = new MenuItem("Easy");
         MenuItem medium = new MenuItem("Medium");
         MenuItem hard = new MenuItem("Hard");
-        chooseLevel.getItems().addAll(easy, medium, hard);
-        gameMenu.getItems().addAll(newGame, chooseLevel);
+        //chooseLevel.getItems().addAll(easy, medium, hard);
+        gameMenu.getItems().addAll(newGame, easy, medium, hard);
 
 
 
@@ -147,10 +147,9 @@ public class SudokuView extends VBox {
                 @Override
                 public void handle(ActionEvent event) {
                     if (event.getSource() instanceof Button) {
-                        if(((Button) event.getSource()).getText()=="C"){
-                            nextStringNumber="0";
-                        }
-                        else{
+                        if (((Button) event.getSource()).getText() == "C") {
+                            nextStringNumber = "0";
+                        } else {
                             nextStringNumber = ((Button) event.getSource()).getText();
                             System.out.println(nextStringNumber);
                         }
@@ -181,7 +180,7 @@ public class SudokuView extends VBox {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (mouseEvent.getSource() instanceof Button) {
-                    if (controller.HandleCheck()){
+                    if (controller.HandleCheck()) {
                         System.out.println("It is correct!"); //Här kanske vi kan reseta spelet?
                     }
                 }
@@ -228,18 +227,27 @@ public class SudokuView extends VBox {
                 if (actionEvent.getSource() instanceof MenuItem) {
                     MenuItem level = (MenuItem) actionEvent.getSource();
                     SudokuUtilities.SudokuLevel chooseLevel = SudokuUtilities.SudokuLevel.EASY;
-                    if (level == menuBar.getMenus().get(1))
+                    if (menuBar.getMenus().get(1).getItems().get(1) == level) {
                         chooseLevel = SudokuUtilities.SudokuLevel.EASY;
+                        System.out.println("easy");
                     }
-                    //controller.onInitNewGameRoundSelected(chooseLevel);
+                    else if (menuBar.getMenus().get(1).getItems().get(2) == level) {
+                        chooseLevel = SudokuUtilities.SudokuLevel.MEDIUM;
+                        System.out.println("medium");
+                    }
+                    else if (menuBar.getMenus().get(1).getItems().get(3) == level) {
+                        chooseLevel = SudokuUtilities.SudokuLevel.HARD;
+                        System.out.println("Hard");
+                    }
+                    controller.onInitNewGameRoundSelected(chooseLevel);
                 }
-            };
-        //menuBar.getMenus().get(1).getItems().get(0).addEventHandler(ActionEvent.ACTION, newGameHandler);
+            }
+        };
+        menuBar.getMenus().get(1).getItems().get(1).addEventHandler(ActionEvent.ACTION, newGameHandler);
+        menuBar.getMenus().get(1).getItems().get(2).addEventHandler(ActionEvent.ACTION, newGameHandler);
+        menuBar.getMenus().get(1).getItems().get(3).addEventHandler(ActionEvent.ACTION, newGameHandler);
 
 
     }
-
-
-
 
 }
