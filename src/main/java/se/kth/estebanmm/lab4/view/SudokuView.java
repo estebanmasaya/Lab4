@@ -1,9 +1,7 @@
 package se.kth.estebanmm.lab4.view;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -12,9 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.stage.WindowEvent;
 import se.kth.estebanmm.lab4.model.Board;
-import se.kth.estebanmm.lab4.model.Square;
 import se.kth.estebanmm.lab4.model.SudokuUtilities;
 
 public class SudokuView extends VBox {
@@ -72,19 +68,30 @@ public class SudokuView extends VBox {
                 }
             }
         }
-        if(model.getEmptySquares().size()==0) finishedAlert();
+        if(model.isGameCompleted()) checkAlert();
     }
 
-    private void finishedAlert(){
+    private void checkAlert(){
         Alert finished = new Alert(Alert.AlertType.INFORMATION);
-        finished.setTitle("Sudoku Completed!!");
-        if(model.checkIfCorrect()){
-            finished.setContentText("Well done!!! \nYour solution is correct!");
+        if(model.isGameCompleted()){
+            finished.setTitle("Sudoku Completed!!");
+            if(model.checkIfCorrect()){
+                finished.setContentText("Well done!!! \nYour solution is correct!");
+            }
+            else {
+                finished.setContentText("Try again. Your solution was unfortunately wrong!");
+            }
         }
-        else {
-            finished.setContentText("Try again. Your solution was unfortunately wrong!");
+        else{
+            finished.setTitle("Checking solution...");
+            if(model.checkIfCorrect()){
+                finished.setContentText("So far your solution is right.\n Keep on with the good work!");
+            }
+            else {
+                finished.setContentText("Theres something wrong with your solution\n Keep on trying.");
+            }
+        }
 
-        }
         finished.show();
     }
 
@@ -138,7 +145,8 @@ public class SudokuView extends VBox {
         Menu helpMenu = new Menu("Help");
         MenuItem rules = new MenuItem("Rules");
         MenuItem resetGame = new MenuItem("Reset game");
-        helpMenu.getItems().addAll(rules,resetGame);
+        MenuItem checkGame = new MenuItem("Check solution");
+        helpMenu.getItems().addAll(rules,resetGame, checkGame);
         menuBar = new MenuBar(fileMenu, gameMenu, helpMenu);
         return menuBar;
     }
@@ -189,17 +197,16 @@ public class SudokuView extends VBox {
             }
         }
 
-        EventHandler<MouseEvent> checkButton = new EventHandler<>() {
+        EventHandler<ActionEvent> checkHandler = new EventHandler<>() {
             @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getSource() instanceof Button) {
-                    if (controller.HandleCheck()){
-                        System.out.println("It is correct!"); //Här kanske vi kan reseta spelet?
-                    }
+            public void handle(ActionEvent actionEvent) {
+                if (actionEvent.getSource() instanceof Button || actionEvent.getSource() instanceof MenuItem) {
+                    checkAlert();
                 }
             }
         };
-        this.checkButton.addEventHandler(MouseEvent.MOUSE_CLICKED, checkButton);
+        this.checkButton.addEventHandler(ActionEvent.ACTION, checkHandler);
+        menuBar.getMenus().get(2).getItems().get(2).addEventHandler(ActionEvent.ACTION, checkHandler);
 
         EventHandler<MouseEvent> hintButton = new EventHandler<>() {
             @Override
@@ -216,8 +223,14 @@ public class SudokuView extends VBox {
             public void handle(ActionEvent actionEvent) {
                 if (actionEvent.getSource() instanceof MenuItem) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Rules!");
-                    alert.setContentText("This is the rules: ");
+                    alert.setTitle("Rules");
+                    alert.setHeaderText("SUDOKU RULES");
+                    alert.setContentText("Sudoku is a logic-based,[2][3] combinatorial[4] number-placement puzzle.\n" +
+                            "In classic Sudoku, the objective is to fill a 9 × 9 grid \n" +
+                            "with digits so that each column, each row, and each of the nine 3 × 3 \n" +
+                            "subgrids that compose the grid (also called \"boxes\", \"blocks\", or \"regions\")\n" +
+                            " contain all of the digits from 1 to 9. The puzzle setter provides a partially\n" +
+                            " completed grid, which for a well-posed puzzle has a single solution. ");
                     alert.show();
                 }
             }
