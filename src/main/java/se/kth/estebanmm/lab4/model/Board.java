@@ -103,6 +103,11 @@ public class Board {
         return  emptySquares;
     }
 
+    public boolean isGameCompleted(){
+        if(getEmptySquares().size()==0) return true;
+        return false;
+    }
+
     public void clearSquare(int row, int column) {
         if (board[row][column].isChangeable()) {
             board[row][column].setValue(0);
