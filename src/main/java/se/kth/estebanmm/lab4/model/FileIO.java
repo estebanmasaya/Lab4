@@ -8,7 +8,10 @@ public class FileIO{
 
     private FileChooser fileChooser;
 
-    public static 
+    public FileIO() {
+        fileChooser = new FileChooser();
+    }
+
 
 
 }

@@ -10,8 +10,12 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import se.kth.estebanmm.lab4.model.Board;
 import se.kth.estebanmm.lab4.model.SudokuUtilities;
+
+import java.io.File;
 
 public class SudokuView extends VBox {
     private Board model;
@@ -160,6 +164,13 @@ public class SudokuView extends VBox {
         return clickedLabel;
     }
 
+    public File chooseFile(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save to file...");
+        File selectedFile = fileChooser.showSaveDialog(this.getScene().getWindow());
+        return selectedFile;
+    }
+
     private void addEventHandlers(Controller controller) {
         EventHandler<ActionEvent>[] oneToNineHandlers = new EventHandler[SudokuUtilities.GRID_SIZE + 1];
         for (int i = 0; i < SudokuUtilities.GRID_SIZE + 1; i++) {
@@ -167,10 +178,9 @@ public class SudokuView extends VBox {
                 @Override
                 public void handle(ActionEvent event) {
                     if (event.getSource() instanceof Button) {
-                        if(((Button) event.getSource()).getText()=="C"){
-                            nextStringNumber="0";
-                        }
-                        else{
+                        if (((Button) event.getSource()).getText() == "C") {
+                            nextStringNumber = "0";
+                        } else {
                             nextStringNumber = ((Button) event.getSource()).getText();
                             System.out.println(nextStringNumber);
                         }
@@ -253,14 +263,11 @@ public class SudokuView extends VBox {
                 if (actionEvent.getSource() instanceof MenuItem) {
                     if (((MenuItem) actionEvent.getSource()).getText() == "Easy") {
                         controller.onInitNewGameRoundSelected(SudokuUtilities.SudokuLevel.EASY);
-                    }
-                    else if (((MenuItem) actionEvent.getSource()).getText() == "Medium") {
+                    } else if (((MenuItem) actionEvent.getSource()).getText() == "Medium") {
                         controller.onInitNewGameRoundSelected(SudokuUtilities.SudokuLevel.MEDIUM);
-                    }
-                    else if (((MenuItem) actionEvent.getSource()).getText() == "Hard") {
+                    } else if (((MenuItem) actionEvent.getSource()).getText() == "Hard") {
                         controller.onInitNewGameRoundSelected(SudokuUtilities.SudokuLevel.HARD);
-                    }
-                    else controller.onInitNewGameRoundSelected(model.getLevel());
+                    } else controller.onInitNewGameRoundSelected(model.getLevel());
                 }
             }
 
@@ -271,9 +278,16 @@ public class SudokuView extends VBox {
         menuBar.getMenus().get(1).getItems().get(0).addEventHandler(ActionEvent.ACTION, newGameHandler);
 
 
+        EventHandler<ActionEvent> saveHandler = new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (actionEvent.getSource() instanceof MenuItem) {
+                    chooseFile();
+                }
+            }
+        };
+        menuBar.getMenus().get(0).getItems().get(1).addEventHandler(ActionEvent.ACTION, saveHandler);
 
     }
-
-
 
 }

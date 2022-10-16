@@ -20,7 +20,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         FileChooser fileChooser = new FileChooser();
-        FileIO fileIO = new FileIO(fileChooser);
+        FileIO fileIO = new FileIO();
         Board model = new Board(SudokuUtilities.SudokuLevel.EASY);
         primaryStage.setTitle("Sudoku");
         SudokuView root = new SudokuView(model);
