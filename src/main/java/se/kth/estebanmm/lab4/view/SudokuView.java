@@ -35,7 +35,6 @@ public class SudokuView extends VBox {
     private String nextStringNumber;
     private SudokuUtilities.SudokuLevel level;
     private Label clickedLabel;
-    private Menu chooseLevelMenu;
 
     public SudokuView(Board model){
         super();
@@ -129,14 +128,12 @@ public class SudokuView extends VBox {
 
         Menu gameMenu = new Menu("Game");
         MenuItem newGame = new MenuItem("New game");
-        chooseLevelMenu = new Menu("Choose Level");
+        Menu chooseLevelMenu = new Menu("Choose Level");
         MenuItem easy = new MenuItem("Easy");
         MenuItem medium = new MenuItem("Medium");
         MenuItem hard = new MenuItem("Hard");
         chooseLevelMenu.getItems().addAll(easy, medium, hard);
         gameMenu.getItems().addAll(newGame, chooseLevelMenu);
-
-
 
         Menu helpMenu = new Menu("Help");
         MenuItem rules = new MenuItem("Rules");
@@ -255,15 +252,14 @@ public class SudokuView extends VBox {
             }
 
         };
-        chooseLevelMenu.getItems().get(0).addEventHandler(ActionEvent.ACTION, newGameHandler);
-        chooseLevelMenu.getItems().get(1).addEventHandler(ActionEvent.ACTION, newGameHandler);
-        chooseLevelMenu.getItems().get(2).addEventHandler(ActionEvent.ACTION, newGameHandler);
+        ((Menu) (menuBar.getMenus().get(1).getItems().get(1))).getItems().get(0).addEventHandler(ActionEvent.ACTION, newGameHandler);
+        ((Menu) (menuBar.getMenus().get(1).getItems().get(1))).getItems().get(1).addEventHandler(ActionEvent.ACTION, newGameHandler);
+        ((Menu) (menuBar.getMenus().get(1).getItems().get(1))).getItems().get(2).addEventHandler(ActionEvent.ACTION, newGameHandler);
         menuBar.getMenus().get(1).getItems().get(0).addEventHandler(ActionEvent.ACTION, newGameHandler);
 
 
 
     }
-
 
 
 
