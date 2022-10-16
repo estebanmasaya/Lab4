@@ -5,7 +5,11 @@ import se.kth.estebanmm.lab4.model.Board;
 import se.kth.estebanmm.lab4.model.Square;
 import se.kth.estebanmm.lab4.model.SudokuUtilities;
 
+import java.io.File;
+import java.io.IOException;
+
 import static java.lang.Integer.parseInt;
+import static se.kth.estebanmm.lab4.model.FileIO.saveFile;
 
 public class Controller {
     private final Board model;
@@ -45,8 +49,13 @@ public class Controller {
 
     }
 
-    void handleSave(){
+    void handleSave(File file, Board board) {
+        try {
+            saveFile(file, board);
+        }
+        catch(Exception IOException) {
+            System.out.println("File not found");
+        }
 
     }
-
 }

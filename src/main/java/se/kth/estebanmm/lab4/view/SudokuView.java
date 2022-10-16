@@ -167,6 +167,7 @@ public class SudokuView extends VBox {
     public File chooseFile(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save to file...");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All Files", "*.*"));
         File selectedFile = fileChooser.showSaveDialog(this.getScene().getWindow());
         return selectedFile;
     }
@@ -282,7 +283,7 @@ public class SudokuView extends VBox {
             @Override
             public void handle(ActionEvent actionEvent) {
                 if (actionEvent.getSource() instanceof MenuItem) {
-                    chooseFile();
+                    controller.handleSave(chooseFile(), model);
                 }
             }
         };
