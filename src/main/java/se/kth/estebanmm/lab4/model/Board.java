@@ -8,15 +8,18 @@ public class Board {
     private Square[][] board;
     private Square[][] solution;
 
-    public Board(SudokuUtilities.SudokuLevel difficulty) {
-        board = new Square[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
+    private SudokuUtilities.SudokuLevel level;
+
+    public Board(SudokuUtilities.SudokuLevel level) {
         solution = new Square[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
-        initBoard(difficulty);
+        initBoard(level);
     }
 
-    public void initBoard(SudokuUtilities.SudokuLevel difficulty){
+    public void initBoard(SudokuUtilities.SudokuLevel level){
+        this.level = level;
+        board = new Square[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
         boolean changeableTemp;
-        int[][][] tempBoard = SudokuUtilities.generateSudokuMatrix(difficulty);
+        int[][][] tempBoard = SudokuUtilities.generateSudokuMatrix(level);
         for(int i=0; i<SudokuUtilities.GRID_SIZE; i++){
             for(int j=0; j<SudokuUtilities.GRID_SIZE; j++){
                 if(tempBoard[i][j][0]==0) changeableTemp=true;
@@ -48,6 +51,10 @@ public class Board {
         return board;
     }
 
+    public SudokuUtilities.SudokuLevel getLevel() {
+        return level;
+    }
+
     public void clearBoard() {
         for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
             for (int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
@@ -72,14 +79,7 @@ public class Board {
     }
 
     public void hintHelper() {
-        ArrayList<Square> emptySquares = new ArrayList<>();
-        for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
-            for (int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
-                if (board[i][j].getValue() == 0) {
-                   emptySquares.add(board[i][j]);
-                }
-            }
-        }
+        ArrayList<Square> emptySquares = getEmptySquares();
         if(emptySquares.size()!=0){
             int value = (int)(Math.random()*emptySquares.size());
             int row = emptySquares.get(value).getRow();
@@ -89,6 +89,18 @@ public class Board {
         }
 
 
+    }
+
+    public ArrayList<Square> getEmptySquares(){
+        ArrayList<Square> emptySquares = new ArrayList<>();
+        for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
+            for (int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
+                if (board[i][j].getValue() == 0) {
+                    emptySquares.add(board[i][j]);
+                }
+            }
+        }
+        return  emptySquares;
     }
 
     public void clearSquare(int row, int column) {
@@ -137,5 +149,19 @@ public class Board {
         info += '}';
         return info;
     }
+    public String isChangeableToMatrix(){
+        String info = "";
+        for(Square[] row : solution){
+            for(Square s: row){
+                info += s.isChangeable() + " ";
+            }
+            info+= "\n";
+        }
+
+        info += '}';
+        return info;
+    }
+
+
 
 }

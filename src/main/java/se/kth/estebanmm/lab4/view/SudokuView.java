@@ -62,7 +62,8 @@ public class SudokuView extends VBox {
         System.out.println(model.toMatrix());
         for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
             for (int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
-                if(model.getBoard()[i][j].isChangeable()) gridView.getNumberTiles()[i][j].setTextFill(Color.DARKGRAY);
+                if(model.getBoard()[i][j].isChangeable()) gridView.getNumberTiles()[i][j].setTextFill(Color.GRAY);
+                else gridView.getNumberTiles()[i][j].setTextFill(Color.BLACK);
                 if(model.getBoard()[i][j].getValue()==0){
                     gridView.getNumberTiles()[i][j].setText("");
                 }
@@ -71,6 +72,20 @@ public class SudokuView extends VBox {
                 }
             }
         }
+        if(model.getEmptySquares().size()==0) finishedAlert();
+    }
+
+    private void finishedAlert(){
+        Alert finished = new Alert(Alert.AlertType.INFORMATION);
+        finished.setTitle("Sudoku Completed!!");
+        if(model.checkIfCorrect()){
+            finished.setContentText("Well done!!! \nYour solution is correct!");
+        }
+        else {
+            finished.setContentText("Try again. Your solution was unfortunately wrong!");
+
+        }
+        finished.show();
     }
 
     private FlowPane generateLeftPanel(){
@@ -113,20 +128,17 @@ public class SudokuView extends VBox {
 
         Menu gameMenu = new Menu("Game");
         MenuItem newGame = new MenuItem("New game");
-        Menu chooseLevel = new Menu("Choose Level");
+        Menu chooseLevelMenu = new Menu("Choose Level");
         MenuItem easy = new MenuItem("Easy");
         MenuItem medium = new MenuItem("Medium");
         MenuItem hard = new MenuItem("Hard");
-        chooseLevel.getItems().addAll(easy, medium, hard);
-        gameMenu.getItems().addAll(newGame, chooseLevel);
-
-
+        chooseLevelMenu.getItems().addAll(easy, medium, hard);
+        gameMenu.getItems().addAll(newGame, chooseLevelMenu);
 
         Menu helpMenu = new Menu("Help");
         MenuItem rules = new MenuItem("Rules");
         MenuItem resetGame = new MenuItem("Reset game");
         helpMenu.getItems().addAll(rules,resetGame);
-
         menuBar = new MenuBar(fileMenu, gameMenu, helpMenu);
         return menuBar;
     }
@@ -226,19 +238,28 @@ public class SudokuView extends VBox {
             @Override
             public void handle(ActionEvent actionEvent) {
                 if (actionEvent.getSource() instanceof MenuItem) {
-                    MenuItem level = (MenuItem) actionEvent.getSource();
-                    SudokuUtilities.SudokuLevel chooseLevel = SudokuUtilities.SudokuLevel.EASY;
-                    if (level == menuBar.getMenus().get(1))
-                        chooseLevel = SudokuUtilities.SudokuLevel.EASY;
+                    if (((MenuItem) actionEvent.getSource()).getText() == "Easy") {
+                        controller.onInitNewGameRoundSelected(SudokuUtilities.SudokuLevel.EASY);
                     }
-                    //controller.onInitNewGameRoundSelected(chooseLevel);
+                    else if (((MenuItem) actionEvent.getSource()).getText() == "Medium") {
+                        controller.onInitNewGameRoundSelected(SudokuUtilities.SudokuLevel.MEDIUM);
+                    }
+                    else if (((MenuItem) actionEvent.getSource()).getText() == "Hard") {
+                        controller.onInitNewGameRoundSelected(SudokuUtilities.SudokuLevel.HARD);
+                    }
+                    else controller.onInitNewGameRoundSelected(model.getLevel());
                 }
-            };
-        //menuBar.getMenus().get(1).getItems().get(0).addEventHandler(ActionEvent.ACTION, newGameHandler);
+            }
+
+        };
+        ((Menu) (menuBar.getMenus().get(1).getItems().get(1))).getItems().get(0).addEventHandler(ActionEvent.ACTION, newGameHandler);
+        ((Menu) (menuBar.getMenus().get(1).getItems().get(1))).getItems().get(1).addEventHandler(ActionEvent.ACTION, newGameHandler);
+        ((Menu) (menuBar.getMenus().get(1).getItems().get(1))).getItems().get(2).addEventHandler(ActionEvent.ACTION, newGameHandler);
+        menuBar.getMenus().get(1).getItems().get(0).addEventHandler(ActionEvent.ACTION, newGameHandler);
+
 
 
     }
-
 
 
 
