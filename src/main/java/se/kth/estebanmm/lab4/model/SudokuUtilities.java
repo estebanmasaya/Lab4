@@ -115,10 +115,11 @@ public class SudokuUtilities {
         return ch - '0';
     }
 
+
     private static int[][][] shuffleMatrix(int [][][] matrix){
         for(int i=0; i<8 ; i++){
-            int randomA = (int)(Math.random()*GRID_SIZE+1);
-            int randomB = (int)(Math.random()*GRID_SIZE+1);
+            int randomA = (int)((Math.random()*GRID_SIZE)+1);
+            int randomB = (int)((Math.random()*GRID_SIZE)+1);
             matrix = flipNumbers(matrix, randomA, randomB);
         }
         int randomHorizontal = (int)(Math.random()*2);
@@ -131,6 +132,24 @@ public class SudokuUtilities {
         }
         return matrix;
     }
+
+//    private static String treDimToMatrix(int[][][] matrix){
+//        String info = "";
+////        for(int i=0; i < GRID_SIZE; i++){
+////            for(int j=0; j < GRID_SIZE; j++){
+////                info += matrix[i][j][0] + " ";
+////            }
+////            info +="\n";
+////        }
+////        info+="----------------------------\n";
+//        for(int i=0; i < GRID_SIZE; i++){
+//            for(int j=0; j < GRID_SIZE; j++){
+//                info += matrix[i][j][1] + " ";
+//            }
+//            info +="\n";
+//        }
+//        return info;
+//    }
     private static final String easy =
                     "000914070" +
                     "010000054" +
@@ -144,7 +163,7 @@ public class SudokuUtilities {
                     "583914672" +
                     "712386954" +
                     "946752183" +
-                    "827569241" +
+                    "827569341" + //trean här var en 2 från början, men det var felaktig enligt Sudoku reglerna.
                     "461238597" +
                     "395147826" +
                     "239675418" +

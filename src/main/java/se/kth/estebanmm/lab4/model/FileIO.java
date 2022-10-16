@@ -11,24 +11,31 @@ public class FileIO{
     public static void saveFile(File file, Board board) throws IOException {
         ObjectOutputStream oss = null;
         try{
+            System.out.println("file: " + file);
             FileOutputStream fout = new FileOutputStream(file);
             oss = new ObjectOutputStream(fout);
+            System.out.println("TESTSAVE");
             oss.writeObject(board);
+            System.out.println("TESTSAVE");
         } finally {
             oss.close();
         }
     }
 
-    public static Board loadFile(File file, Board board) throws IOException, ClassNotFoundException{
+    public static Board loadFile(File file) throws IOException, ClassNotFoundException{
         ObjectInputStream ois = null;
+        Board newBoard;
         try{
             FileInputStream fileInputStream = new FileInputStream(file);
             ois = new ObjectInputStream(fileInputStream);
-            board = (Board) ois.readObject();
+            System.out.println("TEST");
+            newBoard = (Board) ois.readObject();
+            System.out.println(newBoard.toMatrix());
+            System.out.println("TEST");
         }finally {
             ois.close();
         }
-        return board;
+        return newBoard;
 
     }
 }

@@ -12,8 +12,8 @@ import static se.kth.estebanmm.lab4.model.FileIO.loadFile;
 import static se.kth.estebanmm.lab4.model.FileIO.saveFile;
 
 public class Controller {
-    private final Board model;
-    private final SudokuView view;
+    private Board model;
+    private SudokuView view;
 
     public Controller(Board model, SudokuView view) {
         this.model = model;
@@ -55,16 +55,21 @@ public class Controller {
         }
         catch(IOException exception) {
             System.out.println("File not found");
+            exception.printStackTrace();
         }
     }
 
-    void handleLoad(File file, Board board) {
+    void handleLoad(File file) {
         try {
-            loadFile(file, model);
+            Board newModel = loadFile(file);
+            view.changeModel(newModel);
+            model = newModel;
         }
         catch(IOException | ClassNotFoundException exception) {
             System.out.println("File not found");
         }
-        view.updateFromModel();
+        finally {
+            view.updateFromModel();
+        }
     }
 }

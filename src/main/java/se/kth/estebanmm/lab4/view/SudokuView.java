@@ -300,12 +300,16 @@ public class SudokuView extends VBox {
             @Override
             public void handle(ActionEvent actionEvent) {
                 if (actionEvent.getSource() instanceof MenuItem) {
-                    controller.handleLoad(chooseFileToLoad(), model);
+                    controller.handleLoad(chooseFileToLoad());
                 }
             }
         };
         menuBar.getMenus().get(0).getItems().get(0).addEventHandler(ActionEvent.ACTION, loadHandler);
 
+    }
+
+    public void changeModel(Board newBoard){
+        model = newBoard;
     }
 
 }

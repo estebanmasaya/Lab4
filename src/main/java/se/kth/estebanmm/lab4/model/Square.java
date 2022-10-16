@@ -1,6 +1,8 @@
 package se.kth.estebanmm.lab4.model;
 
-public class Square {
+import java.io.Serializable;
+
+public class Square implements Serializable {
     private int row;
     private int column;
     private int value;

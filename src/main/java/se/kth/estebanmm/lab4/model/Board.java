@@ -1,10 +1,11 @@
 package se.kth.estebanmm.lab4.model;
 
+import java.io.Serializable;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Board {
+public class Board implements Serializable {
     private Square[][] board;
     private Square[][] solution;
 
