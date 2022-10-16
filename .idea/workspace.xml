@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4227aee4-289c-4e9b-b9d2-c45bb6f84de4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/view/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/view/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/view/SudokuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/view/SudokuView.java" afterDir="false" />
     </list>
@@ -34,14 +35,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/HI1027/Tenta"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/model" />
@@ -90,7 +92,7 @@
       <option name="presentableId" value="Default" />
       <updated>1665573864116</updated>
       <workItem from="1665581917648" duration="6392000" />
-      <workItem from="1665862132053" duration="855000" />
+      <workItem from="1665862132053" duration="6255000" />
     </task>
     <servers />
   </component>

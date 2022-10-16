@@ -1,5 +1,6 @@
 package se.kth.estebanmm.lab4.view;
 
+import javafx.scene.control.Menu;
 import se.kth.estebanmm.lab4.model.Board;
 import se.kth.estebanmm.lab4.model.Square;
 import se.kth.estebanmm.lab4.model.SudokuUtilities;
@@ -29,13 +30,18 @@ public class Controller {
         view.updateFromModel();
     }
 
-    void onInitNewGameRoundSelected(){
-        model.initBoard(SudokuUtilities.SudokuLevel.EASY); //diffucilty baserad på vad användaren trycker
+    void onInitNewGameRoundSelected(SudokuUtilities.SudokuLevel level){
+        model.initBoard(level);
+        view.updateFromModel();
+    }
+
+    void handleReset(){
+        model.clearBoard();
         view.updateFromModel();
     }
 
     void handleExit(){
 
     }
-    
+
 }

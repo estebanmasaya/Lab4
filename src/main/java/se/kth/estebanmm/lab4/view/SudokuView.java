@@ -33,6 +33,7 @@ public class SudokuView extends VBox {
 
     private VBox containsGrid;
     private String nextStringNumber;
+    private SudokuUtilities.SudokuLevel level;
     private Label clickedLabel;
 
     public SudokuView(Board model){
@@ -111,17 +112,20 @@ public class SudokuView extends VBox {
         fileMenu.getItems().addAll(loadGame, saveGame, exitMenu);
 
         Menu gameMenu = new Menu("Game");
-        MenuItem resetGame = new MenuItem("Load Game");
+        MenuItem newGame = new MenuItem("New game");
         Menu chooseLevel = new Menu("Choose Level");
         MenuItem easy = new MenuItem("Easy");
         MenuItem medium = new MenuItem("Medium");
         MenuItem hard = new MenuItem("Hard");
         chooseLevel.getItems().addAll(easy, medium, hard);
-        gameMenu.getItems().addAll(resetGame, chooseLevel);
+        gameMenu.getItems().addAll(newGame, chooseLevel);
 
 
 
         Menu helpMenu = new Menu("Help");
+        MenuItem rules = new MenuItem("Rules");
+        MenuItem resetGame = new MenuItem("Reset game");
+        helpMenu.getItems().addAll(rules,resetGame);
 
         menuBar = new MenuBar(fileMenu, gameMenu, helpMenu);
         return menuBar;
@@ -195,10 +199,10 @@ public class SudokuView extends VBox {
         };
         this.hintButton.addEventHandler(MouseEvent.MOUSE_CLICKED, hintButton);
 
-        EventHandler<MouseEvent> helpButton = new EventHandler<>() { // FIXA!
+        EventHandler<ActionEvent> rulesHandler = new EventHandler<>() { // FIXA!
             @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getSource() instanceof Button) {
+            public void handle(ActionEvent actionEvent) {
+                if (actionEvent.getSource() instanceof MenuItem) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Rules!");
                     alert.setContentText("This is the rules: ");
@@ -206,17 +210,33 @@ public class SudokuView extends VBox {
                 }
             }
         };
-        menuBar.getMenus().get(2).addEventHandler(MouseEvent.MOUSE_CLICKED, helpButton);
+        menuBar.getMenus().get(2).getItems().get(0).addEventHandler(ActionEvent.ACTION, rulesHandler);
 
-        EventHandler<MouseEvent> exit = new EventHandler<>() { // FIXA!
+        EventHandler<ActionEvent> resetHandler = new EventHandler<>() { // FIXA!
             @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getSource() instanceof Button) {
-
+            public void handle(ActionEvent actionEvent) {
+                if (actionEvent.getSource() instanceof MenuItem) {
+                    controller.handleReset();
                 }
             }
         };
-        menuBar.getMenus().get(2).addEventHandler(MouseEvent.MOUSE_CLICKED, helpButton);
+        menuBar.getMenus().get(2).getItems().get(1).addEventHandler(ActionEvent.ACTION, resetHandler);
+
+        EventHandler<ActionEvent> newGameHandler = new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (actionEvent.getSource() instanceof MenuItem) {
+                    MenuItem level = (MenuItem) actionEvent.getSource();
+                    SudokuUtilities.SudokuLevel chooseLevel = SudokuUtilities.SudokuLevel.EASY;
+                    if (level == menuBar.getMenus().get(1))
+                        chooseLevel = SudokuUtilities.SudokuLevel.EASY;
+                    }
+                    //controller.onInitNewGameRoundSelected(chooseLevel);
+                }
+            };
+        //menuBar.getMenus().get(1).getItems().get(0).addEventHandler(ActionEvent.ACTION, newGameHandler);
+
+
     }
 
 
