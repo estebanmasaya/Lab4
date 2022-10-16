@@ -29,9 +29,12 @@ public class Square {
         return changeable;
     }
 
-    public void setValue(int row, int column, int value) {
+    public void setValue(int value) {
         this.value = value;
     }
+//    public void setValue(int row, int column, int value) {
+//        this.value = value;
+//    }
 
     @Override
     public String toString() {
