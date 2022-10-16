@@ -223,8 +223,14 @@ public class SudokuView extends VBox {
             public void handle(ActionEvent actionEvent) {
                 if (actionEvent.getSource() instanceof MenuItem) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Rules!");
-                    alert.setContentText("This is the rules: ");
+                    alert.setTitle("Rules");
+                    alert.setHeaderText("SUDOKU RULES");
+                    alert.setContentText("Sudoku is a logic-based,[2][3] combinatorial[4] number-placement puzzle.\n" +
+                            "In classic Sudoku, the objective is to fill a 9 × 9 grid \n" +
+                            "with digits so that each column, each row, and each of the nine 3 × 3 \n" +
+                            "subgrids that compose the grid (also called \"boxes\", \"blocks\", or \"regions\")\n" +
+                            " contain all of the digits from 1 to 9. The puzzle setter provides a partially\n" +
+                            " completed grid, which for a well-posed puzzle has a single solution. ");
                     alert.show();
                 }
             }
