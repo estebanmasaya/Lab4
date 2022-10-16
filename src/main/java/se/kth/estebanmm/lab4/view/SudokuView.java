@@ -55,10 +55,9 @@ public class SudokuView extends VBox {
     }
 
     public void updateFromModel(){
-        System.out.println(model.toMatrix());
         for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
             for (int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
-                if(model.getBoard()[i][j].isChangeable()) gridView.getNumberTiles()[i][j].setTextFill(Color.DARKGRAY);
+                if(model.getBoard()[i][j].isChangeable()) gridView.getNumberTiles()[i][j].setTextFill(Color.GREY);
                 if(model.getBoard()[i][j].getValue()==0){
                     gridView.getNumberTiles()[i][j].setText("");
                 }

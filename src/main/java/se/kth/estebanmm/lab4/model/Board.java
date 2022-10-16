@@ -85,7 +85,7 @@ public class Board {
             int row = emptySquares.get(value).getRow();
             int column = emptySquares.get(value).getColumn();
             emptySquares.get(value).setValue(solution[row][column].getValue());
-            System.out.println("row: " + row + "\n" + "column: " + column + " rand: " + value + " solution:" + solution[row][column].getValue() + " emptySquSize: " + emptySquares.size());
+            //System.out.println("row: " + row + "\n" + "column: " + column + " rand: " + value + " solution:" + solution[row][column].getValue() + " emptySquSize: " + emptySquares.size());
         }
 
 
