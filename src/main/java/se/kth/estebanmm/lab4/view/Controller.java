@@ -31,6 +31,7 @@ public class Controller {
     }
 
     void onInitNewGameRoundSelected(SudokuUtilities.SudokuLevel level){
+        System.out.println(level);
         model.initBoard(level);
         view.updateFromModel();
     }

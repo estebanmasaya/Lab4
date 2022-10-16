@@ -116,13 +116,19 @@ public class SudokuUtilities {
     }
 
     private static int[][][] shuffleMatrix(int [][][] matrix){
-        for(int i=0; i<5 ; i++){
+        for(int i=0; i<8 ; i++){
             int randomA = (int)(Math.random()*GRID_SIZE+1);
             int randomB = (int)(Math.random()*GRID_SIZE+1);
             matrix = flipNumbers(matrix, randomA, randomB);
         }
+        int randomHorizontal = (int)(Math.random()*2);
+        int randomVertical = (int)(Math.random()*2);
+        if(randomHorizontal==1){
             matrix = mirrorHorizontal(matrix);
+        }
+        if(randomVertical==1){
             matrix = mirrorVertical(matrix);
+        }
         return matrix;
     }
     private static final String easy =
