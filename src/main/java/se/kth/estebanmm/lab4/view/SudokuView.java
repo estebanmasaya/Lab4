@@ -11,7 +11,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import se.kth.estebanmm.lab4.model.Board;
 import se.kth.estebanmm.lab4.model.SudokuUtilities;
 
@@ -164,11 +163,19 @@ public class SudokuView extends VBox {
         return clickedLabel;
     }
 
-    public File chooseFile(){
+    public File chooseFileToSave(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save to file...");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All Files", "*.*"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Sudoku", "*.sudoku"));
         File selectedFile = fileChooser.showSaveDialog(this.getScene().getWindow());
+        return selectedFile;
+    }
+
+    public File chooseFileToLoad(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open saved game");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Sudoku", "*.sudoku"));
+        File selectedFile = fileChooser.showOpenDialog(this.getScene().getWindow());
         return selectedFile;
     }
 
@@ -283,11 +290,21 @@ public class SudokuView extends VBox {
             @Override
             public void handle(ActionEvent actionEvent) {
                 if (actionEvent.getSource() instanceof MenuItem) {
-                    controller.handleSave(chooseFile(), model);
+                    controller.handleSave(chooseFileToSave(), model);
                 }
             }
         };
         menuBar.getMenus().get(0).getItems().get(1).addEventHandler(ActionEvent.ACTION, saveHandler);
+
+        EventHandler<ActionEvent> loadHandler = new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (actionEvent.getSource() instanceof MenuItem) {
+                    controller.handleLoad(chooseFileToLoad(), model);
+                }
+            }
+        };
+        menuBar.getMenus().get(0).getItems().get(0).addEventHandler(ActionEvent.ACTION, loadHandler);
 
     }
 

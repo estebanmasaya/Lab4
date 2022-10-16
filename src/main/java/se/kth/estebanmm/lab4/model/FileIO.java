@@ -4,10 +4,8 @@ import javafx.application.Application;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
+import java.util.ArrayList;
 
 public class FileIO{
     public static void saveFile(File file, Board board) throws IOException {
@@ -19,5 +17,18 @@ public class FileIO{
         } finally {
             oss.close();
         }
+    }
+
+    public static Board loadFile(File file, Board board) throws IOException, ClassNotFoundException{
+        ObjectInputStream ois = null;
+        try{
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ois = new ObjectInputStream(fileInputStream);
+            board = (Board) ois.readObject();
+        }finally {
+            ois.close();
+        }
+        return board;
+
     }
 }

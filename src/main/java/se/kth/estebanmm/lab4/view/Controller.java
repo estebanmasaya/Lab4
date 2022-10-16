@@ -1,6 +1,5 @@
 package se.kth.estebanmm.lab4.view;
 
-import javafx.scene.control.Menu;
 import se.kth.estebanmm.lab4.model.Board;
 import se.kth.estebanmm.lab4.model.Square;
 import se.kth.estebanmm.lab4.model.SudokuUtilities;
@@ -9,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static java.lang.Integer.parseInt;
+import static se.kth.estebanmm.lab4.model.FileIO.loadFile;
 import static se.kth.estebanmm.lab4.model.FileIO.saveFile;
 
 public class Controller {
@@ -53,9 +53,18 @@ public class Controller {
         try {
             saveFile(file, board);
         }
-        catch(Exception IOException) {
+        catch(IOException exception) {
             System.out.println("File not found");
         }
+    }
 
+    void handleLoad(File file, Board board) {
+        try {
+            loadFile(file, model);
+        }
+        catch(IOException | ClassNotFoundException exception) {
+            System.out.println("File not found");
+        }
+        view.updateFromModel();
     }
 }
