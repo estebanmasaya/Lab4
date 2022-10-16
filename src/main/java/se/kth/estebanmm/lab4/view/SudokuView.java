@@ -222,11 +222,11 @@ public class SudokuView extends VBox {
         menuBar.getMenus().get(2).getItems().get(1).addEventHandler(ActionEvent.ACTION, resetHandler);
 
         EventHandler<ActionEvent> newGameHandler = new EventHandler<>() {
+            SudokuUtilities.SudokuLevel chooseLevel = SudokuUtilities.SudokuLevel.EASY;
             @Override
             public void handle(ActionEvent actionEvent) {
                 if (actionEvent.getSource() instanceof MenuItem) {
                     MenuItem level = (MenuItem) actionEvent.getSource();
-                    SudokuUtilities.SudokuLevel chooseLevel = SudokuUtilities.SudokuLevel.EASY;
                     if (menuBar.getMenus().get(1).getItems().get(1) == level) {
                         chooseLevel = SudokuUtilities.SudokuLevel.EASY;
                         System.out.println("easy");
@@ -240,9 +240,11 @@ public class SudokuView extends VBox {
                         System.out.println("Hard");
                     }
                     controller.onInitNewGameRoundSelected(chooseLevel);
+                    System.out.println(chooseLevel);
                 }
             }
         };
+        menuBar.getMenus().get(1).getItems().get(0).addEventHandler(ActionEvent.ACTION, newGameHandler);
         menuBar.getMenus().get(1).getItems().get(1).addEventHandler(ActionEvent.ACTION, newGameHandler);
         menuBar.getMenus().get(1).getItems().get(2).addEventHandler(ActionEvent.ACTION, newGameHandler);
         menuBar.getMenus().get(1).getItems().get(3).addEventHandler(ActionEvent.ACTION, newGameHandler);
