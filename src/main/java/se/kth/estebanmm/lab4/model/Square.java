@@ -3,8 +3,8 @@ package se.kth.estebanmm.lab4.model;
 import java.io.Serializable;
 
 public class Square implements Serializable {
-    private int row;
-    private int column;
+    private final int row;
+    private final int column;
     private int value;
     private final boolean changeable;
 

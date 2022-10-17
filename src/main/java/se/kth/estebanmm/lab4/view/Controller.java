@@ -13,7 +13,7 @@ import static se.kth.estebanmm.lab4.model.FileIO.saveFile;
 
 public class Controller {
     private Board model;
-    private SudokuView view;
+    private final SudokuView view;
 
     public Controller(Board model, SudokuView view) {
         this.model = model;

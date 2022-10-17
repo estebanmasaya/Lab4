@@ -10,8 +10,8 @@ import javafx.scene.text.FontWeight;
 import static se.kth.estebanmm.lab4.model.SudokuUtilities.*;
 
 public class GridView {
-    private Label[][] numberTiles; // the tiles/squares to show in the ui grid
-    private TilePane numberPane;
+    private final Label[][] numberTiles; // the tiles/squares to show in the ui grid
+    private final TilePane numberPane;
 
     public GridView() {
         numberTiles = new Label[GRID_SIZE][GRID_SIZE];

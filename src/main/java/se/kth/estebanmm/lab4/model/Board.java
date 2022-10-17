@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class Board implements Serializable {
     private Square[][] board;
-    private Square[][] solution;
+    private final Square[][] solution;
 
     private SudokuUtilities.SudokuLevel level;
 

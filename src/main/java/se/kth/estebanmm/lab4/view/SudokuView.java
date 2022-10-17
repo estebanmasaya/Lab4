@@ -21,13 +21,13 @@ public class SudokuView extends VBox {
     private Board model;
     private MenuBar menuBar;
     private BorderPane borderPane;
-    private GridView gridView;
+    private final GridView gridView;
     private FlowPane leftPanel;
     private FlowPane rightPanel;
     private Button checkButton;
     private Button hintButton;
     private Button[] oneToNine;
-    private VBox containsGrid;
+    private final VBox containsGrid;
     private String nextStringNumber;
 
     public SudokuView(Board model){
