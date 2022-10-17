@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="4227aee4-289c-4e9b-b9d2-c45bb6f84de4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/view/SudokuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/view/SudokuView.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/model/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/model/FileIO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/model/FileIO.java" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,6 +97,7 @@
       <updated>1665573864116</updated>
       <workItem from="1665581917648" duration="6392000" />
       <workItem from="1665862132053" duration="6255000" />
+      <workItem from="1665994323408" duration="6812000" />
     </task>
     <servers />
   </component>

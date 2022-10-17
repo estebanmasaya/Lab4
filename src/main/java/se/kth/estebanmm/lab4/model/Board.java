@@ -10,11 +10,19 @@ public class Board {
 
     private SudokuUtilities.SudokuLevel level;
 
+    /**
+     * Creates and initializes a 9x9 board with a certain difficulty
+     * @param level the level of difficulty (easy, medium, hard)
+     */
     public Board(SudokuUtilities.SudokuLevel level) {
         solution = new Square[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
         initBoard(level);
     }
 
+    /**
+     * Initializes a 9x9 board with a certain difficulty
+     * @param level the level of difficulty (easy, medium, hard)
+     */
     public void initBoard(SudokuUtilities.SudokuLevel level){
         this.level = level;
         board = new Square[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
@@ -29,15 +37,13 @@ public class Board {
             }
         }
     }
-    public boolean makeMove(int row, int column, int value) {
-        Square square = board[row][column];
-        if (square.isChangeable()){
-            square.setValue(value);
-            return true;
-        }
-        return false;
-    }
 
+    /**
+     * Allows a number to be added to the board
+     * @param square - which square to add a number 1-9 to
+     * @param value - which number to add
+     * @return - returns a boolean representing if the move was made
+     */
     public boolean makeMove(Square square, int value){
         if (square.isChangeable()){
             square.setValue(value);
@@ -47,6 +53,8 @@ public class Board {
     }
 
     //KAN VI RETURNERA HELA BOARD HÄR, ELLER BORDE VI CLONeA DEN?
+
+
     public Square[][] getBoard() {
         return board;
     }
@@ -55,6 +63,9 @@ public class Board {
         return level;
     }
 
+    /**
+     * Clears the board to the initial board that was created
+     */
     public void clearBoard() {
         for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
             for (int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
@@ -65,6 +76,10 @@ public class Board {
         }
     }
 
+    /**
+     * Checks if numbers added are correctly placed
+     * @return - returns a boolean representing if the numbers are correct at the moment
+     */
     public boolean checkIfCorrect() {
         for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
             for (int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
@@ -78,6 +93,9 @@ public class Board {
         return true;
     }
 
+    /**
+     * Allows a random valid number to randomly get placed correctly on the board
+     */
     public void hintHelper() {
         ArrayList<Square> emptySquares = getEmptySquares();
         if(emptySquares.size()!=0){
@@ -91,6 +109,10 @@ public class Board {
 
     }
 
+    /**
+     *
+     * @return - returns an array of Squares containing the empty squares
+     */
     public ArrayList<Square> getEmptySquares(){
         ArrayList<Square> emptySquares = new ArrayList<>();
         for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
@@ -103,6 +125,10 @@ public class Board {
         return  emptySquares;
     }
 
+    /**
+     * Checks if the game is completed
+     * @return - returns a boolean representing if the game is completed
+     */
     public boolean isGameCompleted(){
         if(getEmptySquares().size()==0) return true;
         return false;
@@ -127,6 +153,10 @@ public class Board {
         return info;
     }
 
+    /**
+     * Gives a better visualized representation of the board
+     * @return - returns a string of the board
+     */
     //Ett annat sätt att visa infon, i form av matris. Kan tas bort från slutprojektet när det vyn är klar.
     public String toMatrix(){
         String info = "";
@@ -142,6 +172,11 @@ public class Board {
     }
 
     //Ett annat sätt att visa solution, i form av matris. Kan tas bort från slutprojektet när det vyn är klar.
+
+    /**
+     * Shows a visual representation of the solution board
+     * @return - returns a string of the solution board
+     */
     public String solutionToMatrix(){
         String info = "";
         for(Square[] row : solution){
