@@ -30,30 +30,10 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
 
-//        Button button = new Button();
-//        button.setText("Say 'Hello World'");
-//
-//        button.setOnAction(new ButtonHandler());
-//
-//        StackPane root = new StackPane();
-//        root.getChildren().add(button);
-//
-//        Scene scene = new Scene(root, 300, 250);
-//        primaryStage.setScene(scene);
-//
-//        primaryStage.setTitle("Hello JavaFX!");
-//        primaryStage.show();
     }
 
     public static void main(String[] args) {
         launch(args);
     }
 
-    private class ButtonHandler implements EventHandler<ActionEvent> {
-
-        @Override
-        public void handle(ActionEvent event) {
-            System.out.println("Hello JavaFX World!");
-        }
-    }
 }
