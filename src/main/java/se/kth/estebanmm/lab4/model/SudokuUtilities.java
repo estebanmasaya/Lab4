@@ -68,6 +68,11 @@ public class SudokuUtilities {
         return values;
     }
 
+    /**
+     * Mirrors the grid horizontally
+     * @param original - The original grid to be mirrored
+     * @return - returns the mirrored 3 dimensional grid of integers
+     */
     private static int[][][] mirrorHorizontal(int[][][] original){
         int[][][] newMatrix = new int[GRID_SIZE][GRID_SIZE][2];
         for(int i=0; i < GRID_SIZE; i++){
@@ -80,6 +85,11 @@ public class SudokuUtilities {
         return newMatrix;
     }
 
+    /**
+     * Mirrors the grid vertically
+     * @param original - The original grid to be mirrored
+     * @return - returns the mirrored 3 dimensional grid of integers
+     */
     private static int[][][] mirrorVertical(int[][][] original){
         int[][][] newMatrix = new int[GRID_SIZE][GRID_SIZE][2];
         for(int i=0; i < GRID_SIZE; i++){
@@ -92,7 +102,13 @@ public class SudokuUtilities {
         return newMatrix;
     }
 
-
+    /**
+     * Changes the position of the numbers with each other while being in the coordinates
+     * @param matrix - the orignal grid to change
+     * @param numA - the first number to change place
+     * @param numB - the second number to change place
+     * @return - returns the fliped 3 dimensional grid of integers
+     */
     private static int[][][] flipNumbers(int[][][] matrix, int numA, int numB){
         for(int i=0; i < GRID_SIZE; i++){
             for(int j=0; j < GRID_SIZE; j++){
@@ -114,7 +130,11 @@ public class SudokuUtilities {
         return ch - '0';
     }
 
-
+    /**
+     * Shuffles a grid in a random manner
+     * @param matrix - the grid to be shuffled
+     * @return - returns a new shuffled grid
+     */
     private static int[][][] shuffleMatrix(int [][][] matrix){
         for(int i=0; i<8 ; i++){
             int randomA = (int)((Math.random()*GRID_SIZE)+1);
