@@ -3,7 +3,6 @@ package se.kth.estebanmm.lab4.model;
 public class SudokuUtilities {
 
     public enum SudokuLevel {EASY, MEDIUM, HARD}
-
     public static final int GRID_SIZE = 9;
     public static final int SECTIONS_PER_ROW = 3;
     public static final int SECTION_SIZE = 3;
@@ -115,10 +114,11 @@ public class SudokuUtilities {
         return ch - '0';
     }
 
+
     private static int[][][] shuffleMatrix(int [][][] matrix){
         for(int i=0; i<8 ; i++){
-            int randomA = (int)(Math.random()*GRID_SIZE+1);
-            int randomB = (int)(Math.random()*GRID_SIZE+1);
+            int randomA = (int)((Math.random()*GRID_SIZE)+1);
+            int randomB = (int)((Math.random()*GRID_SIZE)+1);
             matrix = flipNumbers(matrix, randomA, randomB);
         }
         int randomHorizontal = (int)(Math.random()*2);
@@ -144,7 +144,7 @@ public class SudokuUtilities {
                     "583914672" +
                     "712386954" +
                     "946752183" +
-                    "827569241" +
+                    "827569341" + //trean här var en 2 från början, men det var felaktig enligt Sudoku reglerna.
                     "461238597" +
                     "395147826" +
                     "239675418" +

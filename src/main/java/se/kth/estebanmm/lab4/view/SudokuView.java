@@ -10,8 +10,12 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import se.kth.estebanmm.lab4.model.Board;
 import se.kth.estebanmm.lab4.model.SudokuUtilities;
+
+import java.io.File;
+import java.util.Optional;
 
 public class SudokuView extends VBox {
     private Board model;
@@ -22,15 +26,9 @@ public class SudokuView extends VBox {
     private FlowPane rightPanel;
     private Button checkButton;
     private Button hintButton;
-
-    private Button helpButton;
-
     private Button[] oneToNine;
-
     private VBox containsGrid;
     private String nextStringNumber;
-    private SudokuUtilities.SudokuLevel level;
-    private Label clickedLabel;
 
     public SudokuView(Board model){
         super();
@@ -38,24 +36,28 @@ public class SudokuView extends VBox {
         Controller controller = new Controller(model, this);
         generateMenu();
         nextStringNumber = "0";
-        borderPane = new BorderPane();
-        borderPane.setPadding(new Insets(5));
         gridView = new GridView();
         containsGrid = new VBox(gridView.getNumberPane());
         containsGrid.fillWidthProperty();
         generateLeftPanel();
         generateRightPanel();
-        borderPane.setCenter(containsGrid);
-        borderPane.setLeft(leftPanel);
-        borderPane.setRight(rightPanel);
+        borderPane = generateBorderPane(containsGrid, leftPanel, rightPanel);
         this.getChildren().addAll(menuBar, borderPane);
         addEventHandlers(controller);
         updateFromModel();
 
     }
 
-    public void updateFromModel(){
-        System.out.println(model.toMatrix());
+    private BorderPane generateBorderPane(VBox containsGrid, FlowPane leftPanel, FlowPane rightPanel){
+        borderPane = new BorderPane();
+        borderPane.setPadding(new Insets(5));
+        borderPane.setCenter(containsGrid);
+        borderPane.setLeft(leftPanel);
+        borderPane.setRight(rightPanel);
+        return borderPane;
+    }
+
+    void updateFromModel(){
         for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
             for (int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
                 if(model.getBoard()[i][j].isChangeable()) gridView.getNumberTiles()[i][j].setTextFill(Color.GRAY);
@@ -91,7 +93,6 @@ public class SudokuView extends VBox {
                 finished.setContentText("Theres something wrong with your solution\n Keep on trying.");
             }
         }
-
         finished.show();
     }
 
@@ -116,13 +117,11 @@ public class SudokuView extends VBox {
         }
         oneToNine[9] = new Button("C");
         rightPanel.getChildren().addAll(oneToNine);
-
         rightPanel.setAlignment(Pos.CENTER);
         rightPanel.setColumnHalignment(HPos.CENTER);
         rightPanel.setPadding(new Insets(5));
         rightPanel.setPrefHeight(200);
         rightPanel.setVgap(2);
-
         return rightPanel;
     }
     
@@ -152,12 +151,24 @@ public class SudokuView extends VBox {
     }
 
 
-    public String getNextStringNumber() {
+    String getNextStringNumber() {
         return nextStringNumber;
     }
 
-    public Label getClickedLabel() {
-        return clickedLabel;
+    File chooseFileToSave(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save to file...");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Sudoku", "*.sudoku"));
+        File selectedFile = fileChooser.showSaveDialog(this.getScene().getWindow());
+        return selectedFile;
+    }
+
+    File chooseFileToLoad(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open saved game");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Sudoku", "*.sudoku"));
+        File selectedFile = fileChooser.showOpenDialog(this.getScene().getWindow());
+        return selectedFile;
     }
 
     private void addEventHandlers(Controller controller) {
@@ -167,12 +178,10 @@ public class SudokuView extends VBox {
                 @Override
                 public void handle(ActionEvent event) {
                     if (event.getSource() instanceof Button) {
-                        if(((Button) event.getSource()).getText()=="C"){
-                            nextStringNumber="0";
-                        }
-                        else{
+                        if (((Button) event.getSource()).getText() == "C") {
+                            nextStringNumber = "0";
+                        } else {
                             nextStringNumber = ((Button) event.getSource()).getText();
-                            System.out.println(nextStringNumber);
                         }
                     }
                 }
@@ -253,14 +262,11 @@ public class SudokuView extends VBox {
                 if (actionEvent.getSource() instanceof MenuItem) {
                     if (((MenuItem) actionEvent.getSource()).getText() == "Easy") {
                         controller.onInitNewGameRoundSelected(SudokuUtilities.SudokuLevel.EASY);
-                    }
-                    else if (((MenuItem) actionEvent.getSource()).getText() == "Medium") {
+                    } else if (((MenuItem) actionEvent.getSource()).getText() == "Medium") {
                         controller.onInitNewGameRoundSelected(SudokuUtilities.SudokuLevel.MEDIUM);
-                    }
-                    else if (((MenuItem) actionEvent.getSource()).getText() == "Hard") {
+                    } else if (((MenuItem) actionEvent.getSource()).getText() == "Hard") {
                         controller.onInitNewGameRoundSelected(SudokuUtilities.SudokuLevel.HARD);
-                    }
-                    else controller.onInitNewGameRoundSelected(model.getLevel());
+                    } else controller.onInitNewGameRoundSelected(model.getLevel());
                 }
             }
 
@@ -269,11 +275,50 @@ public class SudokuView extends VBox {
         ((Menu) (menuBar.getMenus().get(1).getItems().get(1))).getItems().get(1).addEventHandler(ActionEvent.ACTION, newGameHandler);
         ((Menu) (menuBar.getMenus().get(1).getItems().get(1))).getItems().get(2).addEventHandler(ActionEvent.ACTION, newGameHandler);
         menuBar.getMenus().get(1).getItems().get(0).addEventHandler(ActionEvent.ACTION, newGameHandler);
+        EventHandler<ActionEvent> saveHandler = new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (actionEvent.getSource() instanceof MenuItem) {
+                    controller.handleSave(chooseFileToSave(), model);
+                }
+            }
+        };
+        menuBar.getMenus().get(0).getItems().get(1).addEventHandler(ActionEvent.ACTION, saveHandler);
 
+        EventHandler<ActionEvent> loadHandler = new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (actionEvent.getSource() instanceof MenuItem) {
+                    controller.handleLoad(chooseFileToLoad());
+                }
+            }
+        };
+        menuBar.getMenus().get(0).getItems().get(0).addEventHandler(ActionEvent.ACTION, loadHandler);
 
+        EventHandler<ActionEvent> exitHandler = new EventHandler<>(){
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(actionEvent.getSource() instanceof MenuItem){
+                    exitAlert(controller);
+                    controller.handleExit();
+                }
+            }
+        };
+        menuBar.getMenus().get(0).getItems().get(2).addEventHandler(ActionEvent.ACTION, exitHandler);
 
     }
+    public void changeModel(Board newBoard){
+        model = newBoard;
+    }
+    public void exitAlert(Controller controller){
+        Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        exitAlert.setTitle("Save changes");
+        exitAlert.setContentText("Do you want to save your game before exiting?");
+        Optional<ButtonType> result = exitAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            controller.handleSave(chooseFileToSave(), model);
+        }
 
-
+    }
 
 }

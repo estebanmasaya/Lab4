@@ -1,15 +1,19 @@
 package se.kth.estebanmm.lab4.view;
 
-import javafx.scene.control.Menu;
 import se.kth.estebanmm.lab4.model.Board;
 import se.kth.estebanmm.lab4.model.Square;
 import se.kth.estebanmm.lab4.model.SudokuUtilities;
 
+import java.io.File;
+import java.io.IOException;
+
 import static java.lang.Integer.parseInt;
+import static se.kth.estebanmm.lab4.model.FileIO.loadFile;
+import static se.kth.estebanmm.lab4.model.FileIO.saveFile;
 
 public class Controller {
-    private final Board model;
-    private final SudokuView view;
+    private Board model;
+    private SudokuView view;
 
     public Controller(Board model, SudokuView view) {
         this.model = model;
@@ -21,17 +25,12 @@ public class Controller {
         view.updateFromModel();
     }
 
-    boolean HandleCheck() {
-        return model.checkIfCorrect();
-    }
-
     void HandleHints(){
         model.hintHelper();
         view.updateFromModel();
     }
 
     void onInitNewGameRoundSelected(SudokuUtilities.SudokuLevel level){
-        System.out.println(level);
         model.initBoard(level);
         view.updateFromModel();
     }
@@ -42,7 +41,32 @@ public class Controller {
     }
 
     void handleExit(){
-
+        System.exit(0);
     }
 
+    void handleSave(File file, Board board) {
+        if(file!=null) {
+            try {
+                saveFile(file, board);
+            } catch (IOException exception) {
+                file = view.chooseFileToSave();
+                handleSave(file, board);
+            }
+        }
+    }
+
+    void handleLoad(File file) {
+        if(file!=null) {
+            try {
+                Board newModel = loadFile(file);
+                view.changeModel(newModel);
+                model = newModel;
+            } catch (IOException | ClassNotFoundException exception) {
+                file = view.chooseFileToLoad();
+                handleLoad(file);
+            } finally {
+                view.updateFromModel();
+            }
+        }
+    }
 }

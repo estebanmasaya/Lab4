@@ -1,6 +1,8 @@
 package se.kth.estebanmm.lab4.model;
 
-public class Square {
+import java.io.Serializable;
+
+public class Square implements Serializable {
     private int row;
     private int column;
     private int value;
@@ -30,12 +32,10 @@ public class Square {
     }
 
     public void setValue(int value) {
-        this.value = value;
+        if(isChangeable()){
+            this.value = value;
+        }
     }
-//    public void setValue(int row, int column, int value) {
-//        this.value = value;
-//    }
-
     @Override
     public String toString() {
         return "Square{" +
