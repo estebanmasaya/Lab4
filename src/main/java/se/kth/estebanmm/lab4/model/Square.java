@@ -8,6 +8,8 @@ public class Square implements Serializable {
     private int value;
     private final boolean changeable;
 
+
+    
     public Square(int row, int column, int value, boolean changeable) {
         this.row = row;
         this.column = column;
