@@ -30,24 +30,9 @@ public class Board implements Serializable {
             }
         }
     }
-    public boolean makeMove(int row, int column, int value) {
-        Square square = board[row][column];
-        if (square.isChangeable()){
-            square.setValue(value);
-            return true;
-        }
-        return false;
+    public void makeMove(Square square, int value){
+        square.setValue(value);
     }
-
-    public boolean makeMove(Square square, int value){
-        if (square.isChangeable()){
-            square.setValue(value);
-            return true;
-        }
-        return false;
-    }
-
-    //KAN VI RETURNERA HELA BOARD HÄR, ELLER BORDE VI CLONeA DEN?
     public Square[][] getBoard() {
         return board;
     }
@@ -88,10 +73,7 @@ public class Board implements Serializable {
             emptySquares.get(value).setValue(solution[row][column].getValue());
             System.out.println("row: " + row + "\n" + "column: " + column + " rand: " + value + " solution:" + solution[row][column].getValue() + " emptySquSize: " + emptySquares.size());
         }
-
-
     }
-
     public ArrayList<Square> getEmptySquares(){
         ArrayList<Square> emptySquares = new ArrayList<>();
         for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
@@ -108,28 +90,8 @@ public class Board implements Serializable {
         if(getEmptySquares().size()==0) return true;
         return false;
     }
-
-    public void clearSquare(int row, int column) {
-        if (board[row][column].isChangeable()) {
-            board[row][column].setValue(0);
-        }
-    }
-
     @Override
     public String toString() {
-        String info = "Board{";
-        for(Square[] row : board){
-            for(Square s: row){
-                info += s + "\n";
-            }
-        }
-
-        info += '}';
-        return info;
-    }
-
-    //Ett annat sätt att visa infon, i form av matris. Kan tas bort från slutprojektet när det vyn är klar.
-    public String toMatrix(){
         String info = "";
         for(Square[] row : board){
             for(Square s: row){
@@ -137,37 +99,7 @@ public class Board implements Serializable {
             }
             info+= "\n";
         }
-
         info += '}';
         return info;
     }
-
-    //Ett annat sätt att visa solution, i form av matris. Kan tas bort från slutprojektet när det vyn är klar.
-    public String solutionToMatrix(){
-        String info = "";
-        for(Square[] row : solution){
-            for(Square s: row){
-                info += s.getValue() + " ";
-            }
-            info+= "\n";
-        }
-
-        info += '}';
-        return info;
-    }
-    public String isChangeableToMatrix(){
-        String info = "";
-        for(Square[] row : solution){
-            for(Square s: row){
-                info += s.isChangeable() + " ";
-            }
-            info+= "\n";
-        }
-
-        info += '}';
-        return info;
-    }
-
-
-
 }

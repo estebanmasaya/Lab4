@@ -32,12 +32,10 @@ public class Square implements Serializable {
     }
 
     public void setValue(int value) {
-        this.value = value;
+        if(isChangeable()){
+            this.value = value;
+        }
     }
-//    public void setValue(int row, int column, int value) {
-//        this.value = value;
-//    }
-
     @Override
     public String toString() {
         return "Square{" +

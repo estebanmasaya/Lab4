@@ -25,17 +25,12 @@ public class Controller {
         view.updateFromModel();
     }
 
-    boolean HandleCheck() {
-        return model.checkIfCorrect();
-    }
-
     void HandleHints(){
         model.hintHelper();
         view.updateFromModel();
     }
 
     void onInitNewGameRoundSelected(SudokuUtilities.SudokuLevel level){
-        System.out.println(level);
         model.initBoard(level);
         view.updateFromModel();
     }
@@ -46,30 +41,32 @@ public class Controller {
     }
 
     void handleExit(){
-
+        System.exit(0);
     }
 
     void handleSave(File file, Board board) {
-        try {
-            saveFile(file, board);
-        }
-        catch(IOException exception) {
-            System.out.println("File not found");
-            exception.printStackTrace();
+        if(file!=null) {
+            try {
+                saveFile(file, board);
+            } catch (IOException exception) {
+                file = view.chooseFileToSave();
+                handleSave(file, board);
+            }
         }
     }
 
     void handleLoad(File file) {
-        try {
-            Board newModel = loadFile(file);
-            view.changeModel(newModel);
-            model = newModel;
-        }
-        catch(IOException | ClassNotFoundException exception) {
-            System.out.println("File not found");
-        }
-        finally {
-            view.updateFromModel();
+        if(file!=null) {
+            try {
+                Board newModel = loadFile(file);
+                view.changeModel(newModel);
+                model = newModel;
+            } catch (IOException | ClassNotFoundException exception) {
+                file = view.chooseFileToLoad();
+                handleLoad(file);
+            } finally {
+                view.updateFromModel();
+            }
         }
     }
 }

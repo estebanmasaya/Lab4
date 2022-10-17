@@ -10,6 +10,7 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/model/FileIO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/model/FileIO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/model/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/model/Square.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/model/SudokuUtilities.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/model/SudokuUtilities.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/model/TestMain.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/view/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/view/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/view/SudokuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/se/kth/estebanmm/lab4/view/SudokuView.java" afterDir="false" />
     </list>

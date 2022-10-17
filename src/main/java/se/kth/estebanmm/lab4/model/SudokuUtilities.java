@@ -3,7 +3,6 @@ package se.kth.estebanmm.lab4.model;
 public class SudokuUtilities {
 
     public enum SudokuLevel {EASY, MEDIUM, HARD}
-
     public static final int GRID_SIZE = 9;
     public static final int SECTIONS_PER_ROW = 3;
     public static final int SECTION_SIZE = 3;
@@ -132,24 +131,6 @@ public class SudokuUtilities {
         }
         return matrix;
     }
-
-//    private static String treDimToMatrix(int[][][] matrix){
-//        String info = "";
-////        for(int i=0; i < GRID_SIZE; i++){
-////            for(int j=0; j < GRID_SIZE; j++){
-////                info += matrix[i][j][0] + " ";
-////            }
-////            info +="\n";
-////        }
-////        info+="----------------------------\n";
-//        for(int i=0; i < GRID_SIZE; i++){
-//            for(int j=0; j < GRID_SIZE; j++){
-//                info += matrix[i][j][1] + " ";
-//            }
-//            info +="\n";
-//        }
-//        return info;
-//    }
     private static final String easy =
                     "000914070" +
                     "010000054" +
