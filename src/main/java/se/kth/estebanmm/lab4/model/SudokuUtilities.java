@@ -1,11 +1,89 @@
 package se.kth.estebanmm.lab4.model;
 
-public class SudokuUtilities {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class SudokuUtilities implements Serializable {
 
     public enum SudokuLevel {EASY, MEDIUM, HARD}
     public static final int GRID_SIZE = 9;
     public static final int SECTIONS_PER_ROW = 3;
     public static final int SECTION_SIZE = 3;
+
+    private Square [][] solution;
+    private SudokuLevel level;
+
+    public SudokuUtilities (SudokuUtilities.SudokuLevel level){
+        solution = initBoard(level);
+        this.level = level;
+    }
+    /**
+     * Initializes a 9x9 board with a certain difficulty
+     * @param level the level of difficulty (easy, medium, hard)
+     */
+    public Square[][] initBoard(SudokuUtilities.SudokuLevel level){
+        Square[][] board = new Square[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
+        Square[][] solution = new Square[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
+        boolean changeableTemp;
+        int[][][] tempBoard = SudokuUtilities.generateSudokuMatrix(level);
+        for(int i=0; i<SudokuUtilities.GRID_SIZE; i++){
+            for(int j=0; j<SudokuUtilities.GRID_SIZE; j++){
+                if(tempBoard[i][j][0]==0) changeableTemp=true;
+                else changeableTemp=false;
+                board[i][j] = new Square(i, j, tempBoard[i][j][0], changeableTemp);
+                solution[i][j] = new Square(i, j, tempBoard[i][j][1], changeableTemp);
+            }
+        }
+        return board;
+    }
+
+
+    /**
+     * Checks if numbers added are correctly placed
+     * @return - returns a boolean representing if the numbers are correct at the moment
+     */
+    public boolean check(Square[][] board) {
+        for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
+            for (int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
+                if (board[i][j].getValue() != 0 && board[i][j].isChangeable()) {
+                    if (board[i][j].getValue() != solution[i][j].getValue()) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Allows a random valid number to randomly get placed correctly on the board
+     */
+    public void hint(Square[][] board) {
+        ArrayList<Square> emptySquares = getEmptySquares(board);
+        if(emptySquares.size()!=0){
+            int value = (int)(Math.random()*emptySquares.size());
+            int row = emptySquares.get(value).getRow();
+            int column = emptySquares.get(value).getColumn();
+            emptySquares.get(value).setValue(solution[row][column].getValue());
+        }
+    }
+
+    /**
+     *
+     * @return - returns an array of Squares containing the empty squares
+     */
+    public ArrayList<Square> getEmptySquares(Square[][] board){
+        ArrayList<Square> emptySquares = new ArrayList<>();
+        for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
+            for (int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
+                if (board[i][j].getValue() == 0) {
+                    emptySquares.add(board[i][j]);
+                }
+            }
+        }
+        return  emptySquares;
+    }
+
 
     /**
      * Create a 3-dimensional matrix with initial values and solution in Sudoku.

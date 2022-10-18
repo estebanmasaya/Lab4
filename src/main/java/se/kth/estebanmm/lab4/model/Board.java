@@ -7,34 +7,20 @@ import java.util.Arrays;
 
 public class Board implements Serializable {
     private Square[][] board;
-    private final Square[][] solution;
-
     private SudokuUtilities.SudokuLevel level;
+    private SudokuUtilities utilities;
     /**
      * Creates and initializes a 9x9 board with a certain difficulty
      * @param level the level of difficulty (easy, medium, hard)
      */
     public Board(SudokuUtilities.SudokuLevel level) {
-        solution = new Square[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
-        initBoard(level);
-    }
-    /**
-     * Initializes a 9x9 board with a certain difficulty
-     * @param level the level of difficulty (easy, medium, hard)
-     */
-    public void initBoard(SudokuUtilities.SudokuLevel level){
+        utilities = new SudokuUtilities(level);
+        board = utilities.initBoard(level);
         this.level = level;
-        board = new Square[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
-        boolean changeableTemp;
-        int[][][] tempBoard = SudokuUtilities.generateSudokuMatrix(level);
-        for(int i=0; i<SudokuUtilities.GRID_SIZE; i++){
-            for(int j=0; j<SudokuUtilities.GRID_SIZE; j++){
-                if(tempBoard[i][j][0]==0) changeableTemp=true;
-                else changeableTemp=false;
-                board[i][j] = new Square(i, j, tempBoard[i][j][0], changeableTemp);
-                solution[i][j] = new Square(i, j, tempBoard[i][j][1], changeableTemp);
-            }
-        }
+    }
+
+    public SudokuUtilities getUtilities() {
+        return utilities;
     }
 
     /**
@@ -65,56 +51,20 @@ public class Board implements Serializable {
         }
     }
 
-    /**
-     * Checks if numbers added are correctly placed
-     * @return - returns a boolean representing if the numbers are correct at the moment
-     */
-    public boolean checkIfCorrect() {
-        for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
-            for (int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
-                if (board[i][j].getValue() != 0 && board[i][j].isChangeable()) {
-                    if (board[i][j].getValue() != solution[i][j].getValue()) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
+    public boolean checkIfCorrect(){
+        return utilities.check(board);
     }
 
-    /**
-     * Allows a random valid number to randomly get placed correctly on the board
-     */
-    public void hintHelper() {
-        ArrayList<Square> emptySquares = getEmptySquares();
-        if(emptySquares.size()!=0){
-            int value = (int)(Math.random()*emptySquares.size());
-            int row = emptySquares.get(value).getRow();
-            int column = emptySquares.get(value).getColumn();
-            emptySquares.get(value).setValue(solution[row][column].getValue());
-        }
+    public void hintHelper(Square [][] board){
+        utilities.hint(board);
     }
-    /**
-     *
-     * @return - returns an array of Squares containing the empty squares
-     */
-    public ArrayList<Square> getEmptySquares(){
-        ArrayList<Square> emptySquares = new ArrayList<>();
-        for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
-            for (int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
-                if (board[i][j].getValue() == 0) {
-                    emptySquares.add(board[i][j]);
-                }
-            }
-        }
-        return  emptySquares;
-    }
+
     /**
      * Checks if the game is completed
      * @return - returns a boolean representing if the game is completed
      */
     public boolean isGameCompleted(){
-        if(getEmptySquares().size()==0) return true;
+        if(utilities.getEmptySquares(board).size()==0) return true;
         return false;
     }
     /**

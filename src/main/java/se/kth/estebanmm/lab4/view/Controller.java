@@ -26,12 +26,12 @@ public class Controller {
     }
 
     void HandleHints(){
-        model.hintHelper();
+        model.hintHelper(model.getBoard());
         view.updateFromModel();
     }
 
     void onInitNewGameRoundSelected(SudokuUtilities.SudokuLevel level){
-        model.initBoard(level);
+        model.getUtilities().initBoard(level);
         view.updateFromModel();
     }
 
@@ -49,6 +49,7 @@ public class Controller {
             try {
                 saveFile(file, board);
             } catch (IOException exception) {
+                exception.printStackTrace();
                 file = view.chooseFileToSave();
                 handleSave(file, board);
             }
