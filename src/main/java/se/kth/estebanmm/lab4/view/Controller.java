@@ -20,8 +20,9 @@ public class Controller {
         this.view = view;
     }
 
-    void HandleMove(Square square){
-        model.makeMove(square, parseInt(view.getNextStringNumber()));
+
+    void HandleMove(Square square, int newValue){
+        model.makeMove(square.getRow(), square.getColumn(), newValue);
         view.updateFromModel();
     }
 

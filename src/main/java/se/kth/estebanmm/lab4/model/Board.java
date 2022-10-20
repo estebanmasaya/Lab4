@@ -45,8 +45,19 @@ public class Board implements Serializable {
     public void makeMove(Square square, int value){
         square.setValue(value);
     }
+
+    public void makeMove(int row, int col, int value){
+        board[row][col].setValue(value);
+    }
+
     public Square[][] getBoard() {
-        return board;
+        Square[][] newBoard = new Square[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
+        for(int i=0; i<SudokuUtilities.GRID_SIZE; i++){
+            for(int j=0; j<SudokuUtilities.GRID_SIZE; j++){
+                    newBoard[i][j] = new Square(board[i][j].getRow(), board[i][j].getColumn(), board[i][j].getValue(), board[i][j].isChangeable());
+                }
+            }
+        return newBoard;
     }
 
     public SudokuUtilities.SudokuLevel getLevel() {

@@ -17,6 +17,8 @@ import se.kth.estebanmm.lab4.model.SudokuUtilities;
 import java.io.File;
 import java.util.Optional;
 
+import static java.lang.Integer.parseInt;
+
 public class SudokuView extends VBox {
     private Board model;
     private MenuBar menuBar;
@@ -198,7 +200,7 @@ public class SudokuView extends VBox {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         if (mouseEvent.getSource() instanceof Label) {
-                            controller.HandleMove(model.getBoard()[row][col]);
+                            controller.HandleMove(model.getBoard()[row][col], parseInt(getNextStringNumber()));
                         }
                     }
                 };
